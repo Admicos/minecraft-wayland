@@ -48,6 +48,12 @@ right direction.
 If you're not under an Arch-based system, you're mostly on your own here. You
 can try waiting for someone else to write a guide I guess.
 
+### Option 1: Use the AUR
+
+Install the `glfw-wayland-minecraft` package from the AUR.
+
+### Option 2: Build the PKGBUILD manually
+
 `git clone` this repository to somewhere, and run `makepkg -si` inside. It will
 ask you to replace your existing GLFW package if already installed.
 
