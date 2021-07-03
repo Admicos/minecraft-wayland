@@ -39,7 +39,7 @@ patch it for the other things too?
 
 Go to `Settings` > `Minecraft`, and enable `Use system installation of GLFW`.
 
-If you have a Wayland-compatible version of GLFW installed (`wayland-glfw` on
+If you have a Wayland-compatible version of GLFW installed (`glfw-wayland` on
 Arch) you can try launching the game. It will most likely error out with
 something about window focus not being supported. In that case, you are in the
 right direction.
