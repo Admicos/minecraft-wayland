@@ -20,8 +20,9 @@ patch it for the other things too?
   - If you don't want to do that, throw this into your Java arguments, changing
     the file path as needed: `-Dorg.lwjgl.glfw.libname=/usr/lib/libglfw.so`
 
-- An Arch-based system
+- A distro with a patched GLFW package
 
+  - This guide has packages for Arch and openSUSE
   - Or the knowledge on how to patch packages in your distribution.
   - In which case you can skip step 2 of this guide, as it will not apply to you
     and you should know what to do with the `.patch` files in this repo already
@@ -56,6 +57,11 @@ Install the `glfw-wayland-minecraft` package from the AUR.
 
 `git clone` this repository to somewhere, and run `makepkg -si` inside. It will
 ask you to replace your existing GLFW package if already installed.
+
+### Option 3: Install the openSUSE package
+
+Install the openSUSE package from https://build.opensuse.org/package/show/home:DimiDimit/libglfw3-wayland-minecraft.
+See https://github.com/Admicos/minecraft-wayland/issues/3 for more information.
 
 ## Step 3: There is no step 3
 
