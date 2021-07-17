@@ -33,15 +33,15 @@ sha512sums=('2b45ab72da7a2c007c0f42ccd56205f9684cfb980e2b1df127850cd057bb2b02ce0
 prepare() {
   cd "$srcdir/glfw-$pkgver"
   mkdir build-wayland
-}
 
-build() {
-  cd "$srcdir/glfw-$pkgver"
-  for patch in ../../00*.patch; do
+  for patch in "$srcdir/00"*.patch; do
     echo "Applying patch $patch"
     patch -p1 < "$patch"
   done
-  cd "build-wayland"
+}
+
+build() {
+  cd "$srcdir/glfw-$pkgver/build-wayland"
 
   cmake .. \
       -DCMAKE_INSTALL_PREFIX=/usr \
