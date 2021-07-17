@@ -32,6 +32,7 @@ sha512sums=('2b45ab72da7a2c007c0f42ccd56205f9684cfb980e2b1df127850cd057bb2b02ce0
 
 prepare() {
   cd "$srcdir/glfw-$pkgver"
+  rm -rf build-wayland || true
   mkdir build-wayland
 
   for patch in "$srcdir/00"*.patch; do
