@@ -22,7 +22,7 @@ patch it for the other things too?
 
 - A distro with a patched GLFW package
 
-  - This guide has packages for Arch, openSUSE, and Fedora
+  - This guide has steps for Arch, openSUSE, Fedora, and Gentoo
   - Or the knowledge on how to patch packages in your distribution.
   - In which case you can skip step 2 of this guide, as it will not apply to you
     and you should know what to do with the `.patch` files in this repo already
@@ -67,6 +67,10 @@ See https://github.com/Admicos/minecraft-wayland/issues/3 for more information.
 
 Install the Fedora package from https://copr.fedorainfracloud.org/coprs/lyessaadi/minecraft-wayland-glfw/.
 See https://github.com/Admicos/minecraft-wayland/issues/4 for more information.
+
+### Option 5: Patch the Gentoo package
+
+Patch Gentoo's glfw package by following the guide at https://github.com/Admicos/minecraft-wayland/issues/6
 
 ## Step 3: There is no step 3
 
