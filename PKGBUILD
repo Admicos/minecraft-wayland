@@ -8,8 +8,8 @@
 
 pkgname=glfw-wayland-minecraft
 pkgdesc="A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)"
-pkgver=3.3.4
-pkgrel=2
+pkgver=3.3.5
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Admicos/minecraft-wayland"
 license=('custom:ZLIB')
@@ -24,7 +24,7 @@ source=("https://github.com/glfw/glfw/archive/${pkgver}.tar.gz"
         "0002-Don-t-crash-on-calls-to-focus-or-icon.patch"
         "0003-fix-broken-opengl-screenshots-on-mutter.patch"
         "0004-Do-not-crash-on-window-position-set.patch")
-sha512sums=('2b45ab72da7a2c007c0f42ccd56205f9684cfb980e2b1df127850cd057bb2b02ce02c7c64acd54cd433778e7017148f214afedf09badff9d2edf5f9b8d9d2701'
+sha512sums=('cbb8ebf25d3d826eb1daeff3ad2e0e965ce9def3352955f297743d918f625d96bc05bf87c90f7b57ec53376a0f2f6ce62f80b57fac4e81e023400de275e97beb'
             'e90c5995f405dc5d0581c597719fb1bf0d9335cec162506e34e37c676a4d6eee4a50f2c9d5d1bd1a27f3668ea4a0570db24a10aad7145cd8688e25523d497de8'
             '02fbbb28f6f6ffae3b5b32aac76218b917229e491981e4576054e96a78c7a3dfec3f3b2ffb939d47188b5d47681805c05d66b6fd75ad18b1d225655187ddfb9a'
             '3ca405894fb3549c0bba69fd9f3b5bc5ade1d010e5d82a76c8c2684fd8f008976ad81344b842993a6620e7935c177c524acd2bf1d43c9790dd404a845bdcef72'
