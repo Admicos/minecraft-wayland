@@ -25,13 +25,15 @@ source=("https://github.com/glfw/glfw/archive/${_pkggit}.tar.gz"
         "0002-set-O_NONBLOCK-on-repeat-timerfd.patch"
         "0003-wayland-don-t-crash-app-on-api-calls-to-window-focus.patch"
         "0004-fix-broken-opengl-screenshots-on-mutter.patch"
-        "0005-don-t-crash-on-get-scancode-name.patch")
+        "0005-don-t-crash-on-get-scancode-name.patch"
+        "0006-Fix-cursor-offset-when-shape-changes.patch")
 sha256sums=('7b8c990cfb039110d38c7f5bb21948c402933be3f93f333fe7dcda3deaf72aa4'
             'c163b4a0a6496d758bc656203c23151015683754a6b5c2fc4944df7296d6b5af'
             '84e1a852a16fa6ca2666dd6833ab621612b7eb3b1b11f806406f8ded1ae51a8e'
             'a442f8c7e40fb09775f922b95402108b366114874ee96e370c29e5f8500a02b7'
             '27aea70b07df2d46ac7469c129d28d695eff1ec9492489aa7b2558dd780ebdf0'
-            '16a2410511d75f00902ab1869942a80d85261f8390a97be946f82662891351e5')
+            '16a2410511d75f00902ab1869942a80d85261f8390a97be946f82662891351e5'
+            'effe5ed88d3bc26cd53a25fbd5732647dc895b315ac8342eddc4678d290ad1aa')
 
 prepare() {
   cd "$srcdir/glfw-$_pkggit"
