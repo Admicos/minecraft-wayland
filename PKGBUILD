@@ -28,7 +28,7 @@ source=("https://github.com/glfw/glfw/archive/${_pkggit}.tar.gz"
         "0005-don-t-crash-on-get-scancode-name.patch")
 sha256sums=('7b8c990cfb039110d38c7f5bb21948c402933be3f93f333fe7dcda3deaf72aa4'
             'c163b4a0a6496d758bc656203c23151015683754a6b5c2fc4944df7296d6b5af'
-            '84e1a852a16fa6ca2666dd6833ab621612b7eb3b1b11f806406f8ded1ae51a8e'
+            '5cd74a83dc7824c7696c1534f880b7a4a0992bb6dba6e4531ad1c040541f1d30'
             'a442f8c7e40fb09775f922b95402108b366114874ee96e370c29e5f8500a02b7'
             '27aea70b07df2d46ac7469c129d28d695eff1ec9492489aa7b2558dd780ebdf0'
             '16a2410511d75f00902ab1869942a80d85261f8390a97be946f82662891351e5')
