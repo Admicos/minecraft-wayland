@@ -2,12 +2,6 @@
 
 Because I **REALLY** had nothing better to do with my life.
 
-## Why is this better than [Waynotgonnaland](https://github.com/Admicos/waynotgonnaland)
-
-This doesn't require modding Minecraft, instead preferring to patch GLFW. You
-had to patch GLFW anyway to fix a pretty important freezing issue, so why not
-patch it for the other things too?
-
 ## Requirements
 
 - A version of Minecraft >= 1.13
@@ -31,9 +25,11 @@ patch it for the other things too?
 
 - Forge will not work without another workaround
 - The controls page (and anywhere a keyboard key is shown) is a bit wonky
-- Not tested outside Sway. You mileage may vary on, say, GNOME.
-  - I do not have any test environment but if you're confident a patch fixes any
-    issues encountered I will most likely add it in.
+  - Keys you replace through your compositor (example: `caps:swapescape`) will
+    require you to use the original key
+- Originally made for Sway, GNOME needs to manually makepkg the `libdecoration`
+  branch for GNOME specific fixes (until a new GLFW version releases)
+  - I haven't received any bug reports from KDE, so it'll (probably) work
 
 ## Step 1: Setting up MultiMC to use the system GLFW
 
@@ -44,7 +40,7 @@ Arch) you can try launching the game. It will most likely error out with
 something about window focus not being supported. In that case, you are in the
 right direction.
 
-## Step 2: Installing tha patched GLFW library
+## Step 2: Installing the patched GLFW library
 
 If you're not under an Arch-based system, you're mostly on your own here. You
 can try waiting for someone else to write a guide I guess.
@@ -65,7 +61,7 @@ See https://github.com/Admicos/minecraft-wayland/issues/4 for more information.
 
 ### Option 4: Patch the Gentoo package
 
-Patch Gentoo's glfw package by following the guide at https://github.com/Admicos/minecraft-wayland/issues/6
+Patch Gentoo's GLFW package by following the guide at https://github.com/Admicos/minecraft-wayland/issues/6
 
 ## Step 3: There is no step 3
 
