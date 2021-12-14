@@ -9,7 +9,7 @@
 pkgname=glfw-wayland-minecraft
 pkgdesc="A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)"
 pkgver=3.3.6
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Admicos/minecraft-wayland"
 license=('custom:ZLIB')
