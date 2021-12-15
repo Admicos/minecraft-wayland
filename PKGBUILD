@@ -1,3 +1,4 @@
+# Maintainer: EncryptedCicada <me@varnit.com>
 # Maintainer: Ecmel Berk Canlıer <me@ecmelberk.com>
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: philefou <tuxication AT gmail DOT com>
@@ -6,13 +7,13 @@
 # Contributor: Mihai Militaru <mihai.militaru@ephemeros.org>
 # Contributor: SpepS <dreamspepser at yahoo dot it>
 
-pkgname=glfw-wayland-minecraft
-pkgdesc="A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)"
+pkgname=glfw-wayland-minecraft-libdecoration
+pkgdesc="A free, open source, portable framework for graphical application development (wayland, patched for Minecraft and Gnome)"
 pkgver=3.4.0
 _pkggit=87d5646f5d2bad0562744501633bf8105f59c193
 pkgrel=1
 arch=('x86_64')
-url="https://github.com/Admicos/minecraft-wayland"
+url="https://github.com/EncryptedCicada/minecraft-wayland"
 license=('custom:ZLIB')
 depends=('wayland' 'libxkbcommon' 'libgl' 'libdecor')
 conflicts=('glfw' 'glfw-wayland')
