@@ -1,3 +1,5 @@
+<B> This repository is for hosting the Gnome specific changes of the parent repository and to host the package on AUR. Please submit any issues or PRs on the parent repository </B>
+
 # The better way of running Minecraft Without XWayland
 
 Because I **REALLY** had nothing better to do with my life.
@@ -28,7 +30,7 @@ Because I **REALLY** had nothing better to do with my life.
   - Keys you replace through your compositor (example: `caps:swapescape`) will
     require you to use the original key
 - Originally made for Sway, GNOME needs to manually makepkg the `libdecoration`
-  branch for GNOME specific fixes (until a new GLFW version releases)
+  branch for GNOME specific fixes (until a new GLFW version releases. See steps for Gnome on Arch below.)
   - I haven't received any bug reports from KDE, so it'll (probably) work
 
 ## Step 1: Setting up MultiMC to use the system GLFW
@@ -47,7 +49,7 @@ can try waiting for someone else to write a guide I guess.
 
 ### Option 1: Use the AUR
 
-Install the `glfw-wayland-minecraft` package from the AUR.
+Install the `glfw-wayland-minecraft-libdecoration` package from the AUR.
 
 ### Option 2: Build the PKGBUILD manually
 
