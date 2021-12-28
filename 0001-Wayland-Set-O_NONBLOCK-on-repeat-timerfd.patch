@@ -10,19 +10,19 @@ Fixes #1711
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/wl_init.c b/src/wl_init.c
-index 0ce45a30..ba32707f 100644
+index 5e20daa6..4988d3a5 100644
 --- a/src/wl_init.c
 +++ b/src/wl_init.c
-@@ -1169,7 +1169,7 @@ int _glfwPlatformInit(void)
+@@ -1148,7 +1148,7 @@ int _glfwPlatformInit(void)
  
      _glfw.wl.timerfd = -1;
      if (_glfw.wl.seatVersion >= 4)
 -        _glfw.wl.timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC);
 +        _glfw.wl.timerfd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
  
-     if (_glfw.wl.pointer && _glfw.wl.shm)
+     if (!_glfw.wl.wmBase)
      {
-@@ -1196,7 +1196,7 @@ int _glfwPlatformInit(void)
+@@ -1182,7 +1182,7 @@ int _glfwPlatformInit(void)
              wl_cursor_theme_load(cursorTheme, 2 * cursorSize, _glfw.wl.shm);
          _glfw.wl.cursorSurface =
              wl_compositor_create_surface(_glfw.wl.compositor);

@@ -1,7 +1,7 @@
 pkgbase = glfw-wayland-minecraft
 	pkgdesc = A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
-	pkgver = 3.3.6
-	pkgrel = 3
+	pkgver = 3.4.0
+	pkgrel = 1
 	url = https://github.com/Admicos/minecraft-wayland
 	arch = x86_64
 	license = custom:ZLIB
@@ -20,20 +20,26 @@ pkgbase = glfw-wayland-minecraft
 	depends = wayland
 	depends = libxkbcommon
 	depends = libgl
-	provides = glfw=3.3.6
+	provides = glfw=3.4.0
 	conflicts = glfw
 	conflicts = glfw-wayland
-	source = https://github.com/glfw/glfw/archive/3.3.6.tar.gz
+	source = https://github.com/glfw/glfw/archive/87d5646f5d2bad0562744501633bf8105f59c193.tar.gz
 	source = 0001-Wayland-Set-O_NONBLOCK-on-repeat-timerfd.patch
 	source = 0002-Wayland-Continue-poll-if-timerfd-can-t-be-read.patch
 	source = 0003-Don-t-crash-on-calls-to-focus-or-icon.patch
 	source = 0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch
 	source = 0005-Add-warning-about-being-an-unofficial-patch.patch
-	sha512sums = 4c295c5f4c02f6ede125fce67c52a97450f552f3985b664745bd8a836c1d6d69c04727c956fd26ec61f1e5fd9c074a28dcf6b1d1800f118444eef066f048b201
-	sha512sums = a7f48ed4ada21aff8c9184ed5a87b960ab0691ed82581af1510c4f529ad86c44b2d16dc1dc3cc2b8de8c60ae804c8e85404a48df394fbfbeb6a7629fce6a21e0
-	sha512sums = f04d3280fbcefd06248a4e7746900df9fc798440b0b056a39c95005d0660a348335a02d1d76daed7a8c5b4d757ee285366a97a51fb5751f554a998a9b26ac250
-	sha512sums = 28a7a218a904175f6a51bf11bad359438276e83b2fa1a20b74377bbb418fa1b5867239c422f866d01c37315ebce9d916dbdda1140abed5ec0b23b04c43a57202
-	sha512sums = 99a65117e59473abdbc5e92062682117a6b5d20bb0bae2a92833ef2fa2f83e79e974721d70074f3f8c07f277476584102588002568e8c5e6ba01f63075672fe4
-	sha512sums = 997a3cd6470ee958e75422415e7582fb11ffa2e7b718cdf54005e203de480d589f3c49fd88b39b1c8d3c89cc1a9444cdc37b340a797c93fccd20dca0a08da747
+	source = 0006-Don-t-crash-getting-scancode-name.patch
+	source = 0007-libdecor-proper-decorations-with-title-and-window-bu.patch
+	source = 0008-Add-libdecoration-marker-to-stderr-warning.patch
+	sha512sums = 4fb9c8900165bd6e9d64f30017f81471cc4aecf8ea5cc35dbf586ab2f6d2ffc4c765d9b84799fc64bcf8d08a8f693b3fd1967017c2178edf85fcb353c829e0ca
+	sha512sums = fd7090ae10ef1f52c3f01d95716cbb55a73da4d211608f84ec38abf99aee240d8b75cf84ba4b11e2b0c462397248a060a14ef1955574bb1609051a2653f43f4a
+	sha512sums = 009c1b6b07cdea4f6ada3d068837d9447e79ce2e9c0336b33a742df4fa6b0978914d3a0e45b745205c910bb30fd373e557c5060cd499aad99b13938630102b15
+	sha512sums = 9c6f6e81de1feafeed93988207999d21754c93ff97c8c3158aee43f38b291f4589feaf83e42081445cf89c9209c86e56a0102fccf0d0a97740874dd88e84a746
+	sha512sums = 3c6d317c0c129effd6da48e183228da952a28286acd09abaec4d934031e39a5531d44306e4308c75b33b515113eb54942ca18885edd49b14254af24085de52da
+	sha512sums = d8e8b704e19652bb30c7799300a1bd0db1619ad17e8e36a3ee51673933eba6a8c47dbd615f4a9a385021bdfaa1ddedb2f24e8c05b670ef5278c71d217e91146e
+	sha512sums = b35562f1a65ede074e2b1c9caf934062488d391912a41da1ebbc328d2e3500cea31882a9228b9dfad357e571265825aabcfebb3c74bce077ed6e9752c7f865f5
+	sha512sums = c9893d17241b2a2aa8a02faa0e39f0b41e2b77d1aaee9c6162938265b8a1c52a104068b9837206c27d4d7f1910cf61bc4a32daaeb56ac2066bd39088b27fdc40
+	sha512sums = 12266bb2f86466b933785f47b7638539b1190b513c956297517367e90b059699cab1bfd08f636db45a60a97abe42684eb83534a90ca1cfb25e608c26ba817c30
 
 pkgname = glfw-wayland-minecraft

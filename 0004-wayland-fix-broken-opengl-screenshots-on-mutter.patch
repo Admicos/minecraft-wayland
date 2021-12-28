@@ -8,7 +8,7 @@ Subject: wayland: fix broken opengl screenshots on mutter
  1 file changed, 8 insertions(+)
 
 diff --git a/src/egl_context.c b/src/egl_context.c
-index 6b34f724..b0a810d8 100644
+index 975c67be..b5cbeaff 100644
 --- a/src/egl_context.c
 +++ b/src/egl_context.c
 @@ -175,6 +175,14 @@ static GLFWbool chooseEGLConfig(const _GLFWctxconfig* ctxconfig,

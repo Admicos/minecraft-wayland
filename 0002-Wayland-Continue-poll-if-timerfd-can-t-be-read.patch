@@ -16,10 +16,10 @@ Related to #1711
  1 file changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/src/wl_window.c b/src/wl_window.c
-index db32f449..ec4e60cd 100644
+index 939f9c19..656743a9 100644
 --- a/src/wl_window.c
 +++ b/src/wl_window.c
-@@ -867,10 +867,7 @@ static void handleEvents(int timeout)
+@@ -746,10 +746,7 @@ static void handleEvents(int timeout)
          if (fds[1].revents & POLLIN)
          {
              read_ret = read(_glfw.wl.timerfd, &repeats, sizeof(repeats));
@@ -31,7 +31,7 @@ index db32f449..ec4e60cd 100644
              {
                  for (i = 0; i < repeats; ++i)
                  {
-@@ -886,10 +883,8 @@ static void handleEvents(int timeout)
+@@ -765,10 +762,8 @@ static void handleEvents(int timeout)
          if (fds[2].revents & POLLIN)
          {
              read_ret = read(_glfw.wl.cursorTimerfd, &repeats, sizeof(repeats));

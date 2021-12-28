@@ -10,10 +10,10 @@ care about this patchset to ignore any issues that are not their fault.
  1 file changed, 6 insertions(+)
 
 diff --git a/src/init.c b/src/init.c
-index 52ade583..1d7ca5d5 100644
+index 25a6b4f3..c0ba6d31 100644
 --- a/src/init.c
 +++ b/src/init.c
-@@ -249,6 +249,12 @@ GLFWAPI int glfwInit(void)
+@@ -261,6 +261,12 @@ GLFWAPI int glfwInit(void)
      _glfw.timer.offset = _glfwPlatformGetTimerValue();
  
      glfwDefaultWindowHints();
