@@ -28,7 +28,8 @@ source=("https://github.com/glfw/glfw/archive/${_pkggit}.tar.gz"
         "0005-Add-warning-about-being-an-unofficial-patch.patch"
         "0006-Don-t-crash-getting-scancode-name.patch"
         "0007-libdecor-proper-decorations-with-title-and-window-bu.patch"
-        "0008-Add-libdecoration-marker-to-stderr-warning.patch")
+        "0008-Add-libdecoration-marker-to-stderr-warning.patch"
+        "0009-Wayland-Fix-cursor-offset-when-shape-changes.patch")
 sha512sums=('4fb9c8900165bd6e9d64f30017f81471cc4aecf8ea5cc35dbf586ab2f6d2ffc4c765d9b84799fc64bcf8d08a8f693b3fd1967017c2178edf85fcb353c829e0ca'
             'fd7090ae10ef1f52c3f01d95716cbb55a73da4d211608f84ec38abf99aee240d8b75cf84ba4b11e2b0c462397248a060a14ef1955574bb1609051a2653f43f4a'
             '009c1b6b07cdea4f6ada3d068837d9447e79ce2e9c0336b33a742df4fa6b0978914d3a0e45b745205c910bb30fd373e557c5060cd499aad99b13938630102b15'
@@ -37,7 +38,8 @@ sha512sums=('4fb9c8900165bd6e9d64f30017f81471cc4aecf8ea5cc35dbf586ab2f6d2ffc4c76
             'd8e8b704e19652bb30c7799300a1bd0db1619ad17e8e36a3ee51673933eba6a8c47dbd615f4a9a385021bdfaa1ddedb2f24e8c05b670ef5278c71d217e91146e'
             'b35562f1a65ede074e2b1c9caf934062488d391912a41da1ebbc328d2e3500cea31882a9228b9dfad357e571265825aabcfebb3c74bce077ed6e9752c7f865f5'
             'c9893d17241b2a2aa8a02faa0e39f0b41e2b77d1aaee9c6162938265b8a1c52a104068b9837206c27d4d7f1910cf61bc4a32daaeb56ac2066bd39088b27fdc40'
-            '12266bb2f86466b933785f47b7638539b1190b513c956297517367e90b059699cab1bfd08f636db45a60a97abe42684eb83534a90ca1cfb25e608c26ba817c30')
+            '12266bb2f86466b933785f47b7638539b1190b513c956297517367e90b059699cab1bfd08f636db45a60a97abe42684eb83534a90ca1cfb25e608c26ba817c30'
+            '40daf899af7aa8dd344b48803b6ac44810e83cff05913ed9466ec25fd08f62a0473435bec87b23012609891e1e3129d70261453bfc1fc9e0dd52e799cf4ebc1e')
 
 prepare() {
   cd "$srcdir/glfw-$_pkggit"
