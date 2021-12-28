@@ -9,7 +9,7 @@
 pkgname=glfw-wayland-minecraft
 pkgdesc="A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)"
 pkgver=3.3.6
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://github.com/Admicos/minecraft-wayland"
 license=('custom:ZLIB')
@@ -20,15 +20,17 @@ makedepends=('mesa' 'cmake' 'doxygen' 'vulkan-headers' 'vulkan-icd-loader'
              'extra-cmake-modules' 'wayland-protocols' 'libxi' 'libxrandr'
              'libxcursor' 'libxkbcommon' 'libxinerama')
 source=("https://github.com/glfw/glfw/archive/${pkgver}.tar.gz"
-        "0001-set-O_NONBLOCK-on-repeat-timerfd.patch"
-        "0002-Continue-poll-if-timerfd-cant-be-read.patch"
+        "0001-Wayland-Set-O_NONBLOCK-on-repeat-timerfd.patch"
+        "0002-Wayland-Continue-poll-if-timerfd-can-t-be-read.patch"
         "0003-Don-t-crash-on-calls-to-focus-or-icon.patch"
-        "0004-fix-broken-opengl-screenshots-on-mutter.patch")
+        "0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch"
+        "0005-Add-warning-about-being-an-unofficial-patch.patch")
 sha512sums=('4c295c5f4c02f6ede125fce67c52a97450f552f3985b664745bd8a836c1d6d69c04727c956fd26ec61f1e5fd9c074a28dcf6b1d1800f118444eef066f048b201'
-            '0f43d8a4c6c7e8946d302383e188b618694f122689d0142efcfa227f8fff5d9e655bf422c892533d2dc661751cb507dc14d784e8273b9ebfb847a55becc6c8ea'
-            '0887d28a76e76c7fb6853b51ccb983ae5e69a22a6d0e31522592ad4fcbb36f608ad3bcf07d41cfe6da5bac64495f4a714c261e00ccfa2260900a18f1e034ffc9'
-            '02fbbb28f6f6ffae3b5b32aac76218b917229e491981e4576054e96a78c7a3dfec3f3b2ffb939d47188b5d47681805c05d66b6fd75ad18b1d225655187ddfb9a'
-            '3ca405894fb3549c0bba69fd9f3b5bc5ade1d010e5d82a76c8c2684fd8f008976ad81344b842993a6620e7935c177c524acd2bf1d43c9790dd404a845bdcef72')
+            'a7f48ed4ada21aff8c9184ed5a87b960ab0691ed82581af1510c4f529ad86c44b2d16dc1dc3cc2b8de8c60ae804c8e85404a48df394fbfbeb6a7629fce6a21e0'
+            'f04d3280fbcefd06248a4e7746900df9fc798440b0b056a39c95005d0660a348335a02d1d76daed7a8c5b4d757ee285366a97a51fb5751f554a998a9b26ac250'
+            '28a7a218a904175f6a51bf11bad359438276e83b2fa1a20b74377bbb418fa1b5867239c422f866d01c37315ebce9d916dbdda1140abed5ec0b23b04c43a57202'
+            '99a65117e59473abdbc5e92062682117a6b5d20bb0bae2a92833ef2fa2f83e79e974721d70074f3f8c07f277476584102588002568e8c5e6ba01f63075672fe4'
+            '997a3cd6470ee958e75422415e7582fb11ffa2e7b718cdf54005e203de480d589f3c49fd88b39b1c8d3c89cc1a9444cdc37b340a797c93fccd20dca0a08da747')
 
 prepare() {
   cd "$srcdir/glfw-$pkgver"
