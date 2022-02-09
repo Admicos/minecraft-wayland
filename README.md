@@ -17,7 +17,7 @@ Because I **REALLY** had nothing better to do with my life.
 
 - A distro with a patched GLFW package
 
-  - This guide has steps for Arch, Fedora, and Gentoo
+  - This guide has steps for Arch, Fedora, Gentoo, and Guix
   - Or the knowledge on how to patch packages in your distribution.
     - In which case you can skip step 2 of this guide, as it will not apply to you
       and you should know what to do with the `.patch` files in this repo already
@@ -76,6 +76,10 @@ for more details.
 ### Option 4: Patch the Gentoo package
 
 Patch Gentoo's GLFW package by following the guide at https://github.com/Admicos/minecraft-wayland/issues/6
+
+### Option 5: Install the Guix package
+
+Install the Guix package from https://github.com/Admicos/minecraft-wayland/issues/18
 
 ## Step 3: There is no step 3
 
