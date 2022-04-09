@@ -1,7 +1,7 @@
 pkgbase = glfw-wayland-minecraft
 	pkgdesc = A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
-	pkgver = 3.3.6
-	pkgrel = 3
+	pkgver = 3.3.7
+	pkgrel = 1
 	url = https://github.com/Admicos/minecraft-wayland
 	arch = x86_64
 	license = custom:ZLIB
@@ -20,14 +20,14 @@ pkgbase = glfw-wayland-minecraft
 	depends = wayland
 	depends = libxkbcommon
 	depends = libgl
-	provides = glfw=3.3.6
+	provides = glfw=3.3.7
 	conflicts = glfw
 	conflicts = glfw-wayland
-	source = https://github.com/glfw/glfw/archive/3.3.6.tar.gz
+	source = https://github.com/glfw/glfw/archive/3.3.7.tar.gz
 	source = 0003-Don-t-crash-on-calls-to-focus-or-icon.patch
 	source = 0004-wayland-fix-broken-opengl-screenshots-on-mutter.patch
 	source = 0005-Add-warning-about-being-an-unofficial-patch.patch
-	sha512sums = 4c295c5f4c02f6ede125fce67c52a97450f552f3985b664745bd8a836c1d6d69c04727c956fd26ec61f1e5fd9c074a28dcf6b1d1800f118444eef066f048b201
+	sha512sums = 7b71a5a564633c3617bb0e765566069de9d54e0381fb828959a77a42ca94546623fda514292adee72ddacacc305b219a2e6c4bb799bfab8186010642bc2dffe8
 	sha512sums = 28a7a218a904175f6a51bf11bad359438276e83b2fa1a20b74377bbb418fa1b5867239c422f866d01c37315ebce9d916dbdda1140abed5ec0b23b04c43a57202
 	sha512sums = 99a65117e59473abdbc5e92062682117a6b5d20bb0bae2a92833ef2fa2f83e79e974721d70074f3f8c07f277476584102588002568e8c5e6ba01f63075672fe4
 	sha512sums = 997a3cd6470ee958e75422415e7582fb11ffa2e7b718cdf54005e203de480d589f3c49fd88b39b1c8d3c89cc1a9444cdc37b340a797c93fccd20dca0a08da747
