@@ -16,6 +16,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Preparing workspace..."
+cd $appdir
 rm -rf ./tmp
 mkdir tmp && cd tmp
 cwd=$(pwd)
@@ -48,3 +49,5 @@ mkdir build && cd build
 flatpak run --command=sh --devel $appid -c "ECM_DIR=\"$cwd/ecm/share/ECM\" cmake .. -DCMAKE_INSTALL_PREFIX=\"$appdir/usr\" -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DGLFW_USE_WAYLAND=ON && make install"
 
 echo "Done!"
+cd $appdir
+rm -rf ./tmp
