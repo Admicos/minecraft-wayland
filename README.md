@@ -72,6 +72,10 @@ See https://github.com/Admicos/minecraft-wayland/issues/4 for more information.
 
 Patch Gentoo's GLFW package by following the guide at https://github.com/Admicos/minecraft-wayland/issues/6
 
+### Option 5: Build GLFW for Flatpak
+
+Please read [here](./FLATPAK.md).
+
 ## Step 3: There is no step 3
 
 This should be it. Try launching Minecraft now and see if it works.

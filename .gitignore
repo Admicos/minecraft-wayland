@@ -6,3 +6,6 @@
 
 !.gitignore
 !README.md
+
+!flatpak-build.sh
+!FLATPAK.md
