@@ -2,7 +2,7 @@
 
 ### Note:
 
-Support for `libdecoration` is not present, yet, as the patches are outdated. So if you run GNOME, you'll see white borders, you'll have no minimize, maximize and close buttons and resizing the window will result in lag city, so good luck.
+>Support for `libdecoration` is not present, yet, as the patches are outdated. So if you run GNOME, you'll see white borders, you'll have no minimize, maximize and close buttons and resizing the window will result in lag city, so good luck.
 
 Clone this repository and then run the following commands (ignore everything after the "#"):
 
