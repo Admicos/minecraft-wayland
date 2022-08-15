@@ -235,8 +235,8 @@ diff --color -Naur glfw-orig/src/wl_platform.h glfw-first-patch/src/wl_platform.
      struct zwp_pointer_constraints_v1*      pointerConstraints;
      struct zwp_idle_inhibit_manager_v1*     idleInhibitManager;
 diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
---- glfw-orig/src/wl_window.c	2022-08-15 00:06:02.968057692 +0200
-+++ glfw-first-patch/src/wl_window.c	2022-08-15 00:03:20.005603520 +0200
+--- glfw-orig/src/wl_window.c	2022-08-15 01:29:07.019944792 +0200
++++ glfw-first-patch/src/wl_window.c	2022-08-15 01:27:54.888527895 +0200
 @@ -49,6 +49,11 @@
  #include "wayland-pointer-constraints-unstable-v1-client-protocol.h"
  #include "wayland-idle-inhibit-unstable-v1-client-protocol.h"
@@ -443,7 +443,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->monitor || wndconfig->visible)
      {
          if (!createXdgSurface(window))
-@@ -649,6 +747,16 @@
+@@ -649,6 +747,17 @@
  
          window->wl.visible = GLFW_TRUE;
      }
@@ -456,11 +456,12 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
 +#else
 +    if (!createSurfaceDecoration(window))
 +        return GLFW_FALSE;
++    window->wl.visible = GLFW_TRUE;
 +#endif
  
      return GLFW_TRUE;
  }
-@@ -703,8 +811,12 @@
+@@ -703,8 +812,12 @@
  {
      _GLFWcursor* cursor;
  
@@ -474,7 +475,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      cursor = window->wl.currentCursor;
      if (cursor && cursor->wl.cursor)
-@@ -878,6 +990,7 @@
+@@ -878,6 +991,7 @@
      return string;
  }
  
@@ -482,7 +483,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  static _GLFWwindow* findWindowFromDecorationSurface(struct wl_surface* surface,
                                                      int* which)
  {
-@@ -911,6 +1024,7 @@
+@@ -911,6 +1025,7 @@
      }
      return window;
  }
@@ -490,7 +491,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
  static void pointerHandleEnter(void* userData,
                                 struct wl_pointer* pointer,
-@@ -922,9 +1036,16 @@
+@@ -922,9 +1037,16 @@
      // Happens in the case we just destroyed the surface.
      if (!surface)
          return;
@@ -508,7 +509,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (!window)
      {
          window = findWindowFromDecorationSurface(surface, &focus);
-@@ -933,6 +1054,8 @@
+@@ -933,6 +1055,8 @@
      }
  
      window->wl.decorations.focus = focus;
@@ -517,7 +518,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      _glfw.wl.serial = serial;
      _glfw.wl.pointerEnterSerial = serial;
      _glfw.wl.pointerFocus = window;
-@@ -1026,6 +1149,10 @@
+@@ -1026,6 +1150,10 @@
      window->wl.cursorPosX = x;
      window->wl.cursorPosY = y;
  
@@ -528,7 +529,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      switch (window->wl.decorations.focus)
      {
          case mainWindow:
-@@ -1061,6 +1188,7 @@
+@@ -1061,6 +1189,7 @@
          default:
              assert(0);
      }
@@ -536,7 +537,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (_glfw.wl.cursorPreviousName != cursorName)
          setCursor(window, cursorName);
  }
-@@ -1074,10 +1202,11 @@
+@@ -1074,10 +1203,11 @@
  {
      _GLFWwindow* window = _glfw.wl.pointerFocus;
      int glfwButton;
@@ -549,7 +550,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (button == BTN_LEFT)
      {
          switch (window->wl.decorations.focus)
-@@ -1135,6 +1264,7 @@
+@@ -1135,6 +1265,7 @@
      // Don’t pass the button to the user if it was related to a decoration.
      if (window->wl.decorations.focus != mainWindow)
          return;
@@ -557,7 +558,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      _glfw.wl.serial = serial;
  
-@@ -1294,12 +1424,17 @@
+@@ -1294,12 +1425,17 @@
          return;
  
      _GLFWwindow* window = wl_surface_get_user_data(surface);
@@ -575,7 +576,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      _glfw.wl.serial = serial;
      _glfw.wl.keyboardFocus = window;
-@@ -1761,20 +1896,26 @@
+@@ -1761,20 +1897,26 @@
          window->context.destroy(window);
  
      destroyDecorations(window);
@@ -602,7 +603,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      if (window->wl.surface)
          wl_surface_destroy(window->wl.surface);
-@@ -1788,8 +1929,16 @@
+@@ -1788,8 +1930,16 @@
      if (window->wl.title)
          _glfw_free(window->wl.title);
      window->wl.title = _glfw_strdup(title);
@@ -619,7 +620,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowIconWayland(_GLFWwindow* window,
-@@ -1834,6 +1983,17 @@
+@@ -1834,6 +1984,17 @@
                                       int minwidth, int minheight,
                                       int maxwidth, int maxheight)
  {
@@ -637,7 +638,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->wl.xdg.toplevel)
      {
          if (minwidth == GLFW_DONT_CARE || minheight == GLFW_DONT_CARE)
-@@ -1844,6 +2004,7 @@
+@@ -1844,6 +2005,7 @@
          xdg_toplevel_set_max_size(window->wl.xdg.toplevel, maxwidth, maxheight);
          wl_surface_commit(window->wl.surface);
      }
@@ -645,7 +646,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowAspectRatioWayland(_GLFWwindow* window, int numer, int denom)
-@@ -1867,6 +2028,7 @@
+@@ -1867,6 +2029,7 @@
                                      int* left, int* top,
                                      int* right, int* bottom)
  {
@@ -653,7 +654,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->decorated && !window->monitor && !window->wl.decorations.serverSide)
      {
          if (top)
-@@ -1878,6 +2040,7 @@
+@@ -1878,6 +2041,7 @@
          if (bottom)
              *bottom = _GLFW_DECORATION_WIDTH;
      }
@@ -661,7 +662,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwGetWindowContentScaleWayland(_GLFWwindow* window,
-@@ -1891,12 +2054,20 @@
+@@ -1891,12 +2055,20 @@
  
  void _glfwIconifyWindowWayland(_GLFWwindow* window)
  {
@@ -682,7 +683,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->wl.xdg.toplevel)
      {
          if (window->monitor)
-@@ -1906,16 +2077,21 @@
+@@ -1906,16 +2078,21 @@
          // There is no way to unset minimized, or even to know if we are
          // minimized, so there is nothing to do in this case.
      }
@@ -704,7 +705,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      window->wl.maximized = GLFW_TRUE;
  }
  
-@@ -1923,6 +2099,7 @@
+@@ -1923,6 +2100,7 @@
  {
      if (!window->wl.visible)
      {
@@ -712,7 +713,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
          // NOTE: The XDG surface and role are created here so command-line applications
          //       with off-screen windows do not appear in for example the Unity dock
          if (!window->wl.xdg.toplevel)
-@@ -1930,6 +2107,9 @@
+@@ -1930,6 +2108,9 @@
  
          window->wl.visible = GLFW_TRUE;
          _glfwInputWindowDamage(window);
@@ -722,7 +723,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
  }
  
-@@ -1938,8 +2118,12 @@
+@@ -1938,8 +2119,12 @@
      if (window->wl.visible)
      {
          window->wl.visible = GLFW_FALSE;
@@ -735,7 +736,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
  }
  
-@@ -1967,11 +2151,15 @@
+@@ -1967,11 +2152,15 @@
      }
      else
      {
@@ -751,7 +752,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
      _glfwInputWindowMonitor(window, monitor);
  }
-@@ -2010,9 +2198,18 @@
+@@ -2010,9 +2199,18 @@
  
  void _glfwSetWindowResizableWayland(_GLFWwindow* window, GLFWbool enabled)
  {
@@ -770,7 +771,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowDecoratedWayland(_GLFWwindow* window, GLFWbool enabled)
-@@ -2028,9 +2225,17 @@
+@@ -2028,9 +2226,17 @@
  
  void _glfwSetWindowFloatingWayland(_GLFWwindow* window, GLFWbool enabled)
  {
@@ -788,7 +789,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowMousePassthroughWayland(_GLFWwindow* window, GLFWbool enabled)
-@@ -2421,10 +2626,15 @@
+@@ -2421,10 +2627,15 @@
  
      window->wl.currentCursor = cursor;
  
