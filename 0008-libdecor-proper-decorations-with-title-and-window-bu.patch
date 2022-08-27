@@ -1,6 +1,6 @@
-diff --color -Naur glfw-orig/CMakeLists.txt glfw-first-patch/CMakeLists.txt
+diff --color -Naur glfw-orig/CMakeLists.txt glfw/CMakeLists.txt
 --- glfw-orig/CMakeLists.txt	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/CMakeLists.txt	2022-08-15 00:05:48.676579372 +0200
++++ glfw/CMakeLists.txt	2022-08-27 20:14:40.698977761 +0200
 @@ -45,6 +45,8 @@
                         "WIN32" OFF)
  cmake_dependent_option(USE_MSVC_RUNTIME_LIBRARY_DLL "Use MSVC runtime library DLL" ON
@@ -10,9 +10,9 @@ diff --color -Naur glfw-orig/CMakeLists.txt glfw-first-patch/CMakeLists.txt
  
  set(GLFW_LIBRARY_TYPE "${GLFW_LIBRARY_TYPE}" CACHE STRING
      "Library type override for GLFW (SHARED, STATIC, OBJECT, or empty to follow BUILD_SHARED_LIBS)")
-diff --color -Naur glfw-orig/.github/workflows/build.yml glfw-first-patch/.github/workflows/build.yml
+diff --color -Naur glfw-orig/.github/workflows/build.yml glfw/.github/workflows/build.yml
 --- glfw-orig/.github/workflows/build.yml	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/.github/workflows/build.yml	2022-08-14 22:23:53.382924108 +0200
++++ glfw/.github/workflows/build.yml	2022-08-27 20:14:40.698977761 +0200
 @@ -43,6 +43,12 @@
                run: |
                    sudo apt update
@@ -26,9 +26,9 @@ diff --color -Naur glfw-orig/.github/workflows/build.yml glfw-first-patch/.githu
  
              - name: Configure static library
                run: cmake -S . -B build-static -D GLFW_BUILD_WAYLAND=ON
-diff --color -Naur glfw-orig/src/CMakeLists.txt glfw-first-patch/src/CMakeLists.txt
+diff --color -Naur glfw-orig/src/CMakeLists.txt glfw/src/CMakeLists.txt
 --- glfw-orig/src/CMakeLists.txt	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/src/CMakeLists.txt	2022-08-14 23:59:03.972037531 +0200
++++ glfw/src/CMakeLists.txt	2022-08-27 20:14:40.699977748 +0200
 @@ -172,6 +172,14 @@
          wayland-egl>=0.2.7
          xkbcommon>=0.5.0)
@@ -44,9 +44,9 @@ diff --color -Naur glfw-orig/src/CMakeLists.txt glfw-first-patch/src/CMakeLists.
      target_include_directories(glfw PRIVATE ${Wayland_INCLUDE_DIRS})
  
      if (NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
-diff --color -Naur glfw-orig/src/window.c glfw-first-patch/src/window.c
+diff --color -Naur glfw-orig/src/window.c glfw/src/window.c
 --- glfw-orig/src/window.c	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/src/window.c	2022-08-14 22:23:53.385924208 +0200
++++ glfw/src/window.c	2022-08-27 20:14:40.699977748 +0200
 @@ -251,7 +251,11 @@
      _glfw.hints.framebuffer.redBits      = 8;
      _glfw.hints.framebuffer.greenBits    = 8;
@@ -59,9 +59,9 @@ diff --color -Naur glfw-orig/src/window.c glfw-first-patch/src/window.c
      _glfw.hints.framebuffer.depthBits    = 24;
      _glfw.hints.framebuffer.stencilBits  = 8;
      _glfw.hints.framebuffer.doublebuffer = GLFW_TRUE;
-diff --color -Naur glfw-orig/src/wl_init.c glfw-first-patch/src/wl_init.c
+diff --color -Naur glfw-orig/src/wl_init.c glfw/src/wl_init.c
 --- glfw-orig/src/wl_init.c	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/src/wl_init.c	2022-08-15 00:01:17.234495989 +0200
++++ glfw/src/wl_init.c	2022-08-27 20:14:40.700977735 +0200
 @@ -80,6 +80,7 @@
  #include "wayland-idle-inhibit-unstable-v1-client-protocol-code.h"
  #undef types
@@ -148,9 +148,9 @@ diff --color -Naur glfw-orig/src/wl_init.c glfw-first-patch/src/wl_init.c
      if (_glfw.wl.selectionOffer)
          wl_data_offer_destroy(_glfw.wl.selectionOffer);
      if (_glfw.wl.dragOffer)
-diff --color -Naur glfw-orig/src/wl_platform.h glfw-first-patch/src/wl_platform.h
+diff --color -Naur glfw-orig/src/wl_platform.h glfw/src/wl_platform.h
 --- glfw-orig/src/wl_platform.h	2022-05-06 19:19:25.000000000 +0200
-+++ glfw-first-patch/src/wl_platform.h	2022-08-15 00:02:02.994026928 +0200
++++ glfw/src/wl_platform.h	2022-08-27 20:14:40.700977735 +0200
 @@ -28,6 +28,10 @@
  #include <xkbcommon/xkbcommon.h>
  #include <xkbcommon/xkbcommon-compose.h>
@@ -234,18 +234,18 @@ diff --color -Naur glfw-orig/src/wl_platform.h glfw-first-patch/src/wl_platform.
      struct zwp_relative_pointer_manager_v1* relativePointerManager;
      struct zwp_pointer_constraints_v1*      pointerConstraints;
      struct zwp_idle_inhibit_manager_v1*     idleInhibitManager;
-diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
---- glfw-orig/src/wl_window.c	2022-08-15 01:29:07.019944792 +0200
-+++ glfw-first-patch/src/wl_window.c	2022-08-15 01:27:54.888527895 +0200
+diff --color -Naur glfw-orig/src/wl_window.c glfw/src/wl_window.c
+--- glfw-orig/src/wl_window.c	2022-08-27 20:15:12.798552773 +0200
++++ glfw/src/wl_window.c	2022-08-27 20:19:19.584299559 +0200
 @@ -49,6 +49,11 @@
  #include "wayland-pointer-constraints-unstable-v1-client-protocol.h"
  #include "wayland-idle-inhibit-unstable-v1-client-protocol.h"
  
 +#ifdef WITH_DECORATION
 +#include <libdecor.h>
-+#endif
 +
 +static const char *proxy_tag = "glfw-proxy";
++#endif
  
  static int createTmpfileCloexec(char* tmpname)
  {
@@ -353,27 +353,31 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  static void checkScaleChange(_GLFWwindow* window)
-@@ -370,6 +434,9 @@
+@@ -370,6 +434,11 @@
                                 struct wl_surface* surface,
                                 struct wl_output* output)
  {
++#ifdef WITH_DECORATION
 +    if (wl_proxy_get_tag((struct wl_proxy *) output) != &proxy_tag)
 +        return;
++#endif
 +
      _GLFWwindow* window = userData;
      _GLFWmonitor* monitor = wl_output_get_user_data(output);
  
-@@ -390,6 +457,9 @@
+@@ -390,6 +459,11 @@
                                 struct wl_surface* surface,
                                 struct wl_output* output)
  {
++#ifdef WITH_DECORATION
 +    if (wl_proxy_get_tag((struct wl_proxy *) output) != &proxy_tag)
 +        return;
++#endif
 +
      _GLFWwindow* window = userData;
      _GLFWmonitor* monitor = wl_output_get_user_data(output);
      GLFWbool found = GLFW_FALSE;
-@@ -429,20 +499,42 @@
+@@ -429,20 +503,47 @@
      }
  }
  
@@ -384,10 +388,15 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
 +                                                    window->wl.surface,
 +                                                    &frame_interface,
 +                                                    window);
++    if (!window->wl.decoration_frame)
++    {
++        _glfwInputError(GLFW_PLATFORM_ERROR,
++                        "libdecor: Failed to create libdecor_frame for window");
++        return GLFW_FALSE;
++    }
 +    libdecor_frame_map(window->wl.decoration_frame);
-+
++    wl_display_roundtrip(_glfw.wl.display);
 +    window->wl.scale = 1;
-+
 +    return GLFW_TRUE;
 +}
 +#endif
@@ -416,7 +425,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  static void xdgToplevelHandleConfigure(void* userData,
                                         struct xdg_toplevel* toplevel,
                                         int32_t width,
-@@ -612,6 +704,7 @@
+@@ -612,6 +713,7 @@
  
      return GLFW_TRUE;
  }
@@ -424,18 +433,20 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
  static GLFWbool createSurface(_GLFWwindow* window,
                                const _GLFWwndconfig* wndconfig,
-@@ -626,6 +719,10 @@
-                             window);
+@@ -627,6 +729,12 @@
  
      wl_surface_set_user_data(window->wl.surface, window);
+ 
++#ifdef WITH_DECORATION
 +    wl_proxy_set_tag((struct wl_proxy *) window->wl.surface, &proxy_tag);
 +
 +    wl_display_roundtrip(_glfw.wl.display);
-+    wl_display_roundtrip(_glfw.wl.display);
- 
++#endif
++
      window->wl.native = wl_egl_window_create(window->wl.surface,
                                               wndconfig->width,
-@@ -642,6 +739,7 @@
+                                              wndconfig->height);
+@@ -642,6 +750,7 @@
      if (!window->wl.transparent)
          setOpaqueRegion(window);
  
@@ -443,7 +454,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->monitor || wndconfig->visible)
      {
          if (!createXdgSurface(window))
-@@ -649,6 +747,17 @@
+@@ -649,6 +758,17 @@
  
          window->wl.visible = GLFW_TRUE;
      }
@@ -461,7 +472,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      return GLFW_TRUE;
  }
-@@ -703,8 +812,12 @@
+@@ -703,8 +823,12 @@
  {
      _GLFWcursor* cursor;
  
@@ -475,7 +486,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      cursor = window->wl.currentCursor;
      if (cursor && cursor->wl.cursor)
-@@ -878,6 +991,7 @@
+@@ -878,6 +1002,7 @@
      return string;
  }
  
@@ -483,7 +494,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  static _GLFWwindow* findWindowFromDecorationSurface(struct wl_surface* surface,
                                                      int* which)
  {
-@@ -911,6 +1025,7 @@
+@@ -911,6 +1036,7 @@
      }
      return window;
  }
@@ -491,13 +502,15 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
  static void pointerHandleEnter(void* userData,
                                 struct wl_pointer* pointer,
-@@ -922,9 +1037,16 @@
+@@ -922,9 +1048,18 @@
      // Happens in the case we just destroyed the surface.
      if (!surface)
          return;
 +    
++#ifdef WITH_DECORATION
 +    if (wl_proxy_get_tag((struct wl_proxy *) surface) != &proxy_tag)
 +        return;
++#endif
  
 -    int focus = 0;
      _GLFWwindow* window = wl_surface_get_user_data(surface);
@@ -509,7 +522,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (!window)
      {
          window = findWindowFromDecorationSurface(surface, &focus);
-@@ -933,6 +1055,8 @@
+@@ -933,6 +1068,8 @@
      }
  
      window->wl.decorations.focus = focus;
@@ -518,7 +531,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      _glfw.wl.serial = serial;
      _glfw.wl.pointerEnterSerial = serial;
      _glfw.wl.pointerFocus = window;
-@@ -1026,6 +1150,10 @@
+@@ -1026,6 +1163,10 @@
      window->wl.cursorPosX = x;
      window->wl.cursorPosY = y;
  
@@ -529,7 +542,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      switch (window->wl.decorations.focus)
      {
          case mainWindow:
-@@ -1061,6 +1189,7 @@
+@@ -1061,6 +1202,7 @@
          default:
              assert(0);
      }
@@ -537,7 +550,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (_glfw.wl.cursorPreviousName != cursorName)
          setCursor(window, cursorName);
  }
-@@ -1074,10 +1203,11 @@
+@@ -1074,10 +1216,11 @@
  {
      _GLFWwindow* window = _glfw.wl.pointerFocus;
      int glfwButton;
@@ -550,7 +563,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (button == BTN_LEFT)
      {
          switch (window->wl.decorations.focus)
-@@ -1135,6 +1265,7 @@
+@@ -1135,6 +1278,7 @@
      // Don’t pass the button to the user if it was related to a decoration.
      if (window->wl.decorations.focus != mainWindow)
          return;
@@ -558,7 +571,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      _glfw.wl.serial = serial;
  
-@@ -1294,12 +1425,17 @@
+@@ -1294,12 +1438,17 @@
          return;
  
      _GLFWwindow* window = wl_surface_get_user_data(surface);
@@ -576,7 +589,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      _glfw.wl.serial = serial;
      _glfw.wl.keyboardFocus = window;
-@@ -1761,20 +1897,26 @@
+@@ -1761,20 +1910,26 @@
          window->context.destroy(window);
  
      destroyDecorations(window);
@@ -603,7 +616,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  
      if (window->wl.surface)
          wl_surface_destroy(window->wl.surface);
-@@ -1788,8 +1930,16 @@
+@@ -1788,8 +1943,16 @@
      if (window->wl.title)
          _glfw_free(window->wl.title);
      window->wl.title = _glfw_strdup(title);
@@ -620,7 +633,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowIconWayland(_GLFWwindow* window,
-@@ -1834,6 +1984,17 @@
+@@ -1834,6 +1997,17 @@
                                       int minwidth, int minheight,
                                       int maxwidth, int maxheight)
  {
@@ -638,7 +651,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->wl.xdg.toplevel)
      {
          if (minwidth == GLFW_DONT_CARE || minheight == GLFW_DONT_CARE)
-@@ -1844,6 +2005,7 @@
+@@ -1844,6 +2018,7 @@
          xdg_toplevel_set_max_size(window->wl.xdg.toplevel, maxwidth, maxheight);
          wl_surface_commit(window->wl.surface);
      }
@@ -646,7 +659,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowAspectRatioWayland(_GLFWwindow* window, int numer, int denom)
-@@ -1867,6 +2029,7 @@
+@@ -1867,6 +2042,7 @@
                                      int* left, int* top,
                                      int* right, int* bottom)
  {
@@ -654,7 +667,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->decorated && !window->monitor && !window->wl.decorations.serverSide)
      {
          if (top)
-@@ -1878,6 +2041,7 @@
+@@ -1878,6 +2054,7 @@
          if (bottom)
              *bottom = _GLFW_DECORATION_WIDTH;
      }
@@ -662,7 +675,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwGetWindowContentScaleWayland(_GLFWwindow* window,
-@@ -1891,12 +2055,20 @@
+@@ -1891,12 +2068,20 @@
  
  void _glfwIconifyWindowWayland(_GLFWwindow* window)
  {
@@ -683,7 +696,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      if (window->wl.xdg.toplevel)
      {
          if (window->monitor)
-@@ -1906,16 +2078,21 @@
+@@ -1906,16 +2091,21 @@
          // There is no way to unset minimized, or even to know if we are
          // minimized, so there is nothing to do in this case.
      }
@@ -705,7 +718,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      window->wl.maximized = GLFW_TRUE;
  }
  
-@@ -1923,6 +2100,7 @@
+@@ -1923,6 +2113,7 @@
  {
      if (!window->wl.visible)
      {
@@ -713,7 +726,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
          // NOTE: The XDG surface and role are created here so command-line applications
          //       with off-screen windows do not appear in for example the Unity dock
          if (!window->wl.xdg.toplevel)
-@@ -1930,6 +2108,9 @@
+@@ -1930,6 +2121,9 @@
  
          window->wl.visible = GLFW_TRUE;
          _glfwInputWindowDamage(window);
@@ -723,7 +736,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
  }
  
-@@ -1938,8 +2119,12 @@
+@@ -1938,8 +2132,12 @@
      if (window->wl.visible)
      {
          window->wl.visible = GLFW_FALSE;
@@ -736,7 +749,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
  }
  
-@@ -1967,11 +2152,15 @@
+@@ -1967,11 +2165,15 @@
      }
      else
      {
@@ -752,7 +765,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
      }
      _glfwInputWindowMonitor(window, monitor);
  }
-@@ -2010,9 +2199,18 @@
+@@ -2010,9 +2212,18 @@
  
  void _glfwSetWindowResizableWayland(_GLFWwindow* window, GLFWbool enabled)
  {
@@ -771,7 +784,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowDecoratedWayland(_GLFWwindow* window, GLFWbool enabled)
-@@ -2028,9 +2226,17 @@
+@@ -2028,9 +2239,17 @@
  
  void _glfwSetWindowFloatingWayland(_GLFWwindow* window, GLFWbool enabled)
  {
@@ -789,7 +802,7 @@ diff --color -Naur glfw-orig/src/wl_window.c glfw-first-patch/src/wl_window.c
  }
  
  void _glfwSetWindowMousePassthroughWayland(_GLFWwindow* window, GLFWbool enabled)
-@@ -2421,10 +2627,15 @@
+@@ -2421,10 +2640,15 @@
  
      window->wl.currentCursor = cursor;
  
