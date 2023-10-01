@@ -1,0 +1,291 @@
+From 64beab9e353e1f27e04e31a2951a4df27daec4a4 Mon Sep 17 00:00:00 2001
+From: Dan Klishch <danilklishch@gmail.com>
+Date: Sat, 30 Sep 2023 22:51:16 -0400
+Subject: Wayland: Add support for wp_fractional_scale_v1
+
+---
+ src/CMakeLists.txt |  3 ++
+ src/wl_init.c      | 12 +++++++
+ src/wl_platform.h  |  6 +++-
+ src/wl_window.c    | 80 ++++++++++++++++++++++++++++++++++++++--------
+ 4 files changed, 86 insertions(+), 15 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 01f191c9..9596eff1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -113,6 +113,9 @@ if (GLFW_BUILD_WAYLAND)
+     wayland_generate(
+         "${WAYLAND_PROTOCOLS_BASE}/unstable/idle-inhibit/idle-inhibit-unstable-v1.xml"
+         "${GLFW_BINARY_DIR}/src/wayland-idle-inhibit-unstable-v1-client-protocol")
++    wayland_generate(
++        "${WAYLAND_PROTOCOLS_BASE}/staging/fractional-scale/fractional-scale-v1.xml"
++        "${GLFW_BINARY_DIR}/src/wayland-fractional-scale-v1-client-protocol")
+ endif()
+ 
+ if (WIN32 AND GLFW_BUILD_SHARED_LIBRARY)
+diff --git a/src/wl_init.c b/src/wl_init.c
+index 66d77dca..370d6d4f 100644
+--- a/src/wl_init.c
++++ b/src/wl_init.c
+@@ -48,6 +48,7 @@
+ #include "wayland-relative-pointer-unstable-v1-client-protocol.h"
+ #include "wayland-pointer-constraints-unstable-v1-client-protocol.h"
+ #include "wayland-idle-inhibit-unstable-v1-client-protocol.h"
++#include "wayland-fractional-scale-v1-client-protocol.h"
+ 
+ // NOTE: Versions of wayland-scanner prior to 1.17.91 named every global array of
+ //       wl_interface pointers 'types', making it impossible to combine several unmodified
+@@ -82,6 +83,10 @@
+ #include "wayland-idle-inhibit-unstable-v1-client-protocol-code.h"
+ #undef types
+ 
++#define types _glfw_fractional_scale_manager_types
++#include "wayland-fractional-scale-v1-client-protocol-code.h"
++#undef types
++
+ static void wmBaseHandlePing(void* userData,
+                              struct xdg_wm_base* wmBase,
+                              uint32_t serial)
+@@ -178,6 +183,13 @@ static void registryHandleGlobal(void* userData,
+                              &zwp_idle_inhibit_manager_v1_interface,
+                              1);
+     }
++    else if (strcmp(interface, "wp_fractional_scale_manager_v1") == 0)
++    {
++        _glfw.wl.fractionalScaleManager =
++            wl_registry_bind(registry, name,
++                             &wp_fractional_scale_manager_v1_interface,
++                             1);
++    }
+ }
+ 
+ static void registryHandleGlobalRemove(void* userData,
+diff --git a/src/wl_platform.h b/src/wl_platform.h
+index e9dd0b4a..ca34f66e 100644
+--- a/src/wl_platform.h
++++ b/src/wl_platform.h
+@@ -363,6 +363,7 @@ typedef struct _GLFWwindowWayland
+     GLFWbool                    transparent;
+     struct wl_surface*          surface;
+     struct wl_callback*         callback;
++    struct wp_viewport*         viewport;
+ 
+     struct {
+         struct wl_egl_window*   window;
+@@ -396,16 +397,18 @@ typedef struct _GLFWwindowWayland
+ 
+     // We need to track the monitors the window spans on to calculate the
+     // optimal scaling factor.
+-    int                         contentScale;
++    float                       contentScale;
+     _GLFWscaleWayland*          scales;
+     int                         scaleCount;
+     int                         scaleSize;
++    int                         compositorPreferredScale;
+ 
+     struct zwp_relative_pointer_v1* relativePointer;
+     struct zwp_locked_pointer_v1*   lockedPointer;
+     struct zwp_confined_pointer_v1* confinedPointer;
+ 
+     struct zwp_idle_inhibitor_v1*          idleInhibitor;
++    struct wp_fractional_scale_v1*         fractionalScale;
+ 
+     struct {
+         struct wl_buffer*                  buffer;
+@@ -434,6 +437,7 @@ typedef struct _GLFWlibraryWayland
+     struct zwp_relative_pointer_manager_v1* relativePointerManager;
+     struct zwp_pointer_constraints_v1*      pointerConstraints;
+     struct zwp_idle_inhibit_manager_v1*     idleInhibitManager;
++    struct wp_fractional_scale_manager_v1*  fractionalScaleManager;
+ 
+     _GLFWofferWayland*          offers;
+     unsigned int                offerCount;
+diff --git a/src/wl_window.c b/src/wl_window.c
+index 7b9e3d0d..1de26558 100644
+--- a/src/wl_window.c
++++ b/src/wl_window.c
+@@ -50,6 +50,7 @@
+ #include "wayland-relative-pointer-unstable-v1-client-protocol.h"
+ #include "wayland-pointer-constraints-unstable-v1-client-protocol.h"
+ #include "wayland-idle-inhibit-unstable-v1-client-protocol.h"
++#include "wayland-fractional-scale-v1-client-protocol.h"
+ 
+ #define GLFW_BORDER_SIZE    4
+ #define GLFW_CAPTION_HEIGHT 24
+@@ -309,7 +310,7 @@ static void setContentAreaOpaque(_GLFWwindow* window)
+ 
+ static void resizeWindow(_GLFWwindow* window)
+ {
+-    int scale = window->wl.contentScale;
++    float scale = window->wl.contentScale;
+     int scaledWidth = window->wl.width * scale;
+     int scaledHeight = window->wl.height * scale;
+ 
+@@ -319,6 +320,9 @@ static void resizeWindow(_GLFWwindow* window)
+         setContentAreaOpaque(window);
+     _glfwInputFramebufferSize(window, scaledWidth, scaledHeight);
+ 
++    if (window->wl.viewport)
++        wp_viewport_set_destination(window->wl.viewport, window->wl.width, window->wl.height);
++
+     if (!window->wl.decorations.top.surface)
+         return;
+ 
+@@ -346,22 +350,32 @@ static void resizeWindow(_GLFWwindow* window)
+ void _glfwUpdateContentScaleWayland(_GLFWwindow* window)
+ {
+     if (wl_compositor_get_version(_glfw.wl.compositor) <
+-        WL_SURFACE_SET_BUFFER_SCALE_SINCE_VERSION)
++        WL_SURFACE_SET_BUFFER_SCALE_SINCE_VERSION && !window->wl.viewport)
+     {
+         return;
+     }
+ 
+-    // Get the scale factor from the highest scale monitor.
+-    int maxScale = 1;
+-
+-    for (int i = 0; i < window->wl.scaleCount; i++)
+-        maxScale = _glfw_max(window->wl.scales[i].factor, maxScale);
++    float maxScale = 1;
++    if (window->wl.compositorPreferredScale != 0)
++    {
++        maxScale = window->wl.compositorPreferredScale / 120.;
++    }
++    else
++    {
++        // Get the scale factor from the highest scale monitor.
++        for (int i = 0; i < window->wl.scaleCount; i++)
++            maxScale = _glfw_max(window->wl.scales[i].factor, maxScale);
++    }
+ 
+     // Only change the framebuffer size if the scale changed.
+     if (window->wl.contentScale != maxScale)
+     {
++        if (!window->wl.viewport)
++        {
++            maxScale = ceilf(maxScale);
++            wl_surface_set_buffer_scale(window->wl.surface, ceilf(maxScale));
++        }
+         window->wl.contentScale = maxScale;
+-        wl_surface_set_buffer_scale(window->wl.surface, maxScale);
+         _glfwInputWindowContentScale(window, maxScale, maxScale);
+         resizeWindow(window);
+ 
+@@ -619,6 +633,20 @@ static const struct xdg_surface_listener xdgSurfaceListener =
+     xdgSurfaceHandleConfigure
+ };
+ 
++static void fractionalScaleHandlePreferredScale(void *userData,
++                                                struct wp_fractional_scale_v1* fractional_scale,
++                                                uint32_t scale)
++{
++    _GLFWwindow* window = userData;
++    window->wl.compositorPreferredScale = scale;
++    _glfwUpdateContentScaleWayland(window);
++}
++
++static const struct wp_fractional_scale_v1_listener fractionalScaleListener =
++{
++    fractionalScaleHandlePreferredScale
++};
++
+ void libdecorFrameHandleConfigure(struct libdecor_frame* frame,
+                                   struct libdecor_configuration* config,
+                                   void* userData)
+@@ -901,8 +929,24 @@ static GLFWbool createXdgShellObjects(_GLFWwindow* window)
+     return GLFW_TRUE;
+ }
+ 
+-static GLFWbool createShellObjects(_GLFWwindow* window)
++static GLFWbool setupVisibleWindow(_GLFWwindow* window)
+ {
++    if (_glfw.wl.fractionalScaleManager)
++    {
++        window->wl.fractionalScale =
++            wp_fractional_scale_manager_v1_get_fractional_scale(_glfw.wl.fractionalScaleManager,
++                                                                window->wl.surface);
++        if (!window->wl.fractionalScale)
++            return GLFW_FALSE;
++        wp_fractional_scale_v1_add_listener(window->wl.fractionalScale,
++                                            &fractionalScaleListener,
++                                            window);
++
++        window->wl.viewport = wp_viewporter_get_viewport(_glfw.wl.viewporter, window->wl.surface);
++        if (window->wl.viewport)
++            wp_viewport_set_destination(window->wl.viewport, window->wl.width, window->wl.height);
++    }
++
+     if (_glfw.wl.libdecor.context)
+     {
+         if (createLibdecorFrame(window))
+@@ -912,7 +956,7 @@ static GLFWbool createShellObjects(_GLFWwindow* window)
+     return createXdgShellObjects(window);
+ }
+ 
+-static void destroyShellObjects(_GLFWwindow* window)
++static void tearDownVisibleWindow(_GLFWwindow* window)
+ {
+     destroyFallbackDecorations(window);
+ 
+@@ -925,6 +969,12 @@ static void destroyShellObjects(_GLFWwindow* window)
+     if (window->wl.xdg.toplevel)
+         xdg_toplevel_destroy(window->wl.xdg.toplevel);
+ 
++    if (window->wl.fractionalScale)
++        wp_fractional_scale_v1_destroy(window->wl.fractionalScale);
++
++    if (window->wl.viewport)
++        wp_viewport_destroy(window->wl.viewport);
++
+     if (window->wl.xdg.surface)
+         xdg_surface_destroy(window->wl.xdg.surface);
+ 
+@@ -932,6 +982,8 @@ static void destroyShellObjects(_GLFWwindow* window)
+     window->wl.xdg.decoration = NULL;
+     window->wl.xdg.decorationMode = 0;
+     window->wl.xdg.toplevel = NULL;
++    window->wl.fractionalScale = NULL;
++    window->wl.viewport = NULL;
+     window->wl.xdg.surface = NULL;
+ }
+ 
+@@ -2048,7 +2100,7 @@ GLFWbool _glfwCreateWindowWayland(_GLFWwindow* window,
+ 
+     if (window->monitor || wndconfig->visible)
+     {
+-        if (!createShellObjects(window))
++        if (!setupVisibleWindow(window))
+             return GLFW_FALSE;
+     }
+ 
+@@ -2078,7 +2130,7 @@ void _glfwDestroyWindowWayland(_GLFWwindow* window)
+     if (window->context.destroy)
+         window->context.destroy(window);
+ 
+-    destroyShellObjects(window);
++    tearDownVisibleWindow(window);
+ 
+     if (window->wl.decorations.buffer)
+         wl_buffer_destroy(window->wl.decorations.buffer);
+@@ -2328,7 +2380,7 @@ void _glfwShowWindowWayland(_GLFWwindow* window)
+     {
+         // NOTE: The XDG surface and role are created here so command-line applications
+         //       with off-screen windows do not appear in for example the Unity dock
+-        createShellObjects(window);
++        setupVisibleWindow(window);
+     }
+ }
+ 
+@@ -2337,7 +2389,7 @@ void _glfwHideWindowWayland(_GLFWwindow* window)
+     if (window->wl.visible)
+     {
+         window->wl.visible = GLFW_FALSE;
+-        destroyShellObjects(window);
++        tearDownVisibleWindow(window);
+ 
+         wl_surface_attach(window->wl.surface, NULL, 0, 0);
+         wl_surface_commit(window->wl.surface);
+-- 
+2.42.0
+
