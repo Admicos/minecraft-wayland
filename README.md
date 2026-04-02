@@ -1,6 +1,8 @@
-# The better way of running Minecraft Without XWayland
+This repo has not been up to date for a long while. You may wish to dig through the Issues tab to find people keeping the patchset up to date, although upstream may be working better nowadays, haven't been keeping track. Sorry for not archiving earlier but I haven't checked in on this account for a long while.
 
-Because I **REALLY** had nothing better to do with my life.
+Original README follows:
+
+---
 
 ## Requirements
 
