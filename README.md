@@ -10,7 +10,7 @@ Original README follows:
 
   - Older versions use a version of LWJGL that doesn't work with this patch
 
-- MultiMC (or derivatives) (optional)
+- Prism Launcher (or similar) (optional)
 
   - Other launchers (not the official one) might or might not have similar settings
   - If they don't, you can throw this into your Java arguments, changing the file
@@ -35,9 +35,9 @@ Original README follows:
   an unofficial package listed below (until a new GLFW version releases)
   - KDE works on both branches, but with some [minor issues](https://github.com/Admicos/minecraft-wayland/issues/8#issuecomment-997155245)
 
-## Step 1: Setting up MultiMC to use the system GLFW
+## Step 1: Setting up Prism Launcher to use the system GLFW
 
-Go to `Settings` > `Minecraft`, and enable `Use system installation of GLFW`.
+Go to `Settings` > `Minecraft`, `Tweaks` and enable `Use system installation of GLFW`.
 
 If you have a Wayland-compatible version of GLFW installed (`glfw-wayland` on
 Arch) you can try launching the game. It will most likely error out with
@@ -90,7 +90,7 @@ This should be it. Try launching Minecraft now and see if it works.
 ## Bonus: XWayland per instance
 
 If some version of Minecraft doesn't work with the patch enabled, you can
-disable it through MultiMC just for that version by
+disable it through Prism Launcher just for that version by
 
 - Right clicking on your instance
 - Clicking `Edit instance`
@@ -124,3 +124,4 @@ aren't even that old. Here are the proper credits:
 - `christianrauch` on GitHub
 
   - For https://github.com/glfw/glfw/pull/1693
+
