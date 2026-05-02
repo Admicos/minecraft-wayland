@@ -1,33 +1,24 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Ecmel=20Berk=20Canl=C4=B1er?= <me@ecmelberk.com>
-Date: Tue, 28 Dec 2021 19:41:19 +0300
-Subject: Don't crash on calls to focus or icon
-
----
- src/wl_window.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
 diff --git a/src/wl_window.c b/src/wl_window.c
-index ec4e60cd..b8fc39e4 100644
+index 5a35c001..f19a1b8e 100644
 --- a/src/wl_window.c
 +++ b/src/wl_window.c
-@@ -1042,8 +1042,7 @@ void _glfwPlatformSetWindowTitle(_GLFWwindow* window, const char* title)
- void _glfwPlatformSetWindowIcon(_GLFWwindow* window,
-                                 int count, const GLFWimage* images)
+@@ -2112,8 +2112,7 @@ void _glfwSetWindowTitleWayland(_GLFWwindow* window, const char* title)
+ void _glfwSetWindowIconWayland(_GLFWwindow* window,
+                                int count, const GLFWimage* images)
  {
--    _glfwInputError(GLFW_PLATFORM_ERROR,
--                    "Wayland: Setting window icon not supported");
+-    _glfwInputError(GLFW_FEATURE_UNAVAILABLE,
+-                    "Wayland: The platform does not support setting the window icon");
 +    fprintf(stderr, "!!! Ignoring Error: Wayland: Setting window icon not supported\n");
  }
  
- void _glfwPlatformGetWindowPos(_GLFWwindow* window, int* xpos, int* ypos)
-@@ -1231,8 +1230,7 @@ void _glfwPlatformRequestWindowAttention(_GLFWwindow* window)
+ void _glfwGetWindowPosWayland(_GLFWwindow* window, int* xpos, int* ypos)
+@@ -2356,8 +2355,7 @@ void _glfwRequestWindowAttentionWayland(_GLFWwindow* window)
  
- void _glfwPlatformFocusWindow(_GLFWwindow* window)
+ void _glfwFocusWindowWayland(_GLFWwindow* window)
  {
--    _glfwInputError(GLFW_PLATFORM_ERROR,
--                    "Wayland: Focusing a window requires user interaction");
+-    _glfwInputError(GLFW_FEATURE_UNAVAILABLE,
+-                    "Wayland: The platform does not support setting the input focus");
 +    fprintf(stderr, "!!! Ignoring Error: Wayland: Focusing a window requires user interaction\n");
  }
  
- void _glfwPlatformSetWindowMonitor(_GLFWwindow* window,
+ void _glfwSetWindowMonitorWayland(_GLFWwindow* window,
